@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: ba18133ac15817c4ca9e96e77c0517ac
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - myGrassClip: {fileID: 8300000, guid: 6b01f1f03590de943902daf06cadfaf3, type: 3}
+  - myConcreteClip: {fileID: 8300000, guid: a367785457ad8724c84dfeaa2c05fa47, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
