@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(GroundDetector))]
 public class Footsteps : MonoBehaviour
 {
+    private GroundDetector myGroundDetector = null;
+
     void Start()
     {
-        myFloorDetector = gameObject.GetComponent<FloorDetector>();
+        myFloorDetector = GetComponent<FloorDetector>();
         myAudioSource = gameObject.AddComponent<AudioSource>();
+        myGroundDetector = GetComponent<GroundDetector>();
         myPlayer = GameObject.FindWithTag("Player");
         myLastPlayerPosition = myPlayer.transform.position;
     }
@@ -16,9 +21,8 @@ public class Footsteps : MonoBehaviour
     {
         FloorType floorType = myFloorDetector.DetectFloorType(myPlayer.transform.position);
 
-        print(myPlayer.GetComponent<CharacterController>().isGrounded);
-        if ((myLastPlayerPosition - myPlayer.transform.position).sqrMagnitude > Mathf.Epsilon /*&&
-            myPlayer.GetComponent<CharacterController>().isGrounded*/)
+        if ((myLastPlayerPosition - myPlayer.transform.position).sqrMagnitude > Mathf.Epsilon &&
+            myGroundDetector.Grounded)
         {
             Timer -= Time.deltaTime;
         }
@@ -36,7 +40,7 @@ public class Footsteps : MonoBehaviour
         myLastPlayerPosition = myPlayer.transform.position;
     }
 
-    void ResetTimer()
+    private void ResetTimer()
     {
         Timer = 1f;
     }

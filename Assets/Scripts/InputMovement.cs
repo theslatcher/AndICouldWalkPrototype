@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class InputMovement : MonoBehaviour
 {
-    void Start()
+    private CharacterController myCharacterController = null;
+
+    void Awake()
     {
+        myCharacterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        float movementX = Input.GetAxis("Horizontal");
-        float movementZ = Input.GetAxis("Vertical");
+        Vector3 movement = transform.forward * Input.GetAxis("Vertical");
+        movement += transform.right * Input.GetAxis("Horizontal");
 
-        Vector3 movement = transform.forward * movementZ + transform.right * movementX;
-
-        if (movement.magnitude > Mathf.Epsilon) //Could crash from division by zero.
-        {
+        if (movement.sqrMagnitude > 1f)
             movement.Normalize();
-            movement *= mySpeed * Time.deltaTime;
-            gameObject.GetComponent<CharacterController>().Move(movement);
-        }
+
+        myCharacterController.SimpleMove(movement * myMovementSpeed);
     }
 
-    public float mySpeed = 1f;
+    public float myMovementSpeed = 1f;
 
 }
